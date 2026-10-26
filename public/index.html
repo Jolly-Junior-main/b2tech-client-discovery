@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>B2 Technologies · Client Discovery & CRM | Addis Ababa</title>
+  <meta name="description" content="B2 Technologies - Ideas / Websites / Solutions. Enterprise Client Discovery, Intake Form and Pipeline CRM based in Addis Ababa, Ethiopia.">
+  <link rel="icon" type="image/png" href="images/b2-logo-circle.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Fullscreen Login Screen (Exact visual match to reference design) -->
+  <div id="loginScreen" class="login-wrapper">
+    <!-- Decorative vertical kanji text on sides -->
+    <div class="kanji-col kanji-left" aria-hidden="true">
+      <span>時</span>
+      <span>を</span>
+      <span>超</span>
+      <span>え</span>
+      <span>て</span>
+      <span>響</span>
+      <span>く</span>
+    </div>
+
+    <div class="kanji-col kanji-right" aria-hidden="true">
+      <span>風</span>
+      <span>が</span>
+      <span>運</span>
+      <span>ぶ</span>
+      <span>千</span>
+      <span>年</span>
+      <span>の</span>
+      <span>物</span>
+      <span>語</span>
+    </div>
+
+    <!-- Center Composition -->
+    <div class="login-center">
+      <!-- Red circle accent behind card -->
+      <div class="red-accent-disc"></div>
+
+      <!-- The Dark Blue Card -->
+      <div class="login-card">
+        <!-- B2 Technologies Logo Emblem -->
+        <div class="login-logo-emblem">
+          <img src="images/b2-logo-circle.png" alt="B2 Technologies Logo">
+        </div>
+
+        <h2 class="login-title">Login to your account</h2>
+        <div class="login-brand-subtitle">
+          <strong>B2 Technologies</strong> · Addis Ababa, Ethiopia<br>
+          <span style="opacity: 0.85; font-size: 11px;">Ideas · Websites · Solutions</span>
+        </div>
+
+        <!-- Error Alert -->
+        <div id="loginErrorAlert" class="login-error-alert" style="display: none;"></div>
+
+        <!-- Login Form -->
+        <form id="loginForm" autocomplete="on">
+          <div class="login-field">
+            <label for="loginUsername">Username (Role)</label>
+            <div class="login-input-wrap">
+              <span class="login-input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </span>
+              <input type="text" id="loginUsername" name="username" placeholder="bahreab, betty..." required autocomplete="username">
+            </div>
+          </div>
+
+          <div class="login-field">
+            <label for="loginPassword">Password</label>
+            <div class="login-input-wrap">
+              <span class="login-input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </span>
+              <input type="password" id="loginPassword" name="password" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" id="togglePasswordBtn" class="password-toggle-btn" title="Show or hide password">
+                <svg id="eyeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="login-options-row">
+            <label class="remember-checkbox-label">
+              <input type="checkbox" id="rememberMeCheckbox" checked>
+              <span>Keep me logged in</span>
+            </label>
+            <a href="#" class="forgot-link" onclick="showLoginHint(); return false;">Forgot password?</a>
+          </div>
+
+          <button type="submit" id="loginSubmitBtn" class="login-submit-btn">
+            Login
+          </button>
+        </form>
+
+        <div class="login-divider">
+          <span>OR</span>
+        </div>
+
+        <!-- Quick 1-Click Access Pills (Matches image: Demo, Auth, Only / Bahreab, Betty, Admin) -->
+        <div class="quick-pills-row">
+          <button type="button" class="quick-pill" onclick="quickFillUser('bahreab')">Bahreab</button>
+          <button type="button" class="quick-pill" onclick="quickFillUser('betty')">Betty</button>
+          <button type="button" class="quick-pill" onclick="quickFillUser('admin')">Demo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header>
+    <div class="header-inner">
+      <div class="brand-wrapper">
+        <a href="#" class="brand-logo" onclick="switchView('intake'); return false;" title="B2 Technologies - Building a Smarter Tomorrow">
+          <img src="images/b2-logo-circle.png" alt="B2 Technologies" class="brand-logo-img">
+          <div class="brand-text">
+            <h1>B2 <span>Technologies</span></h1>
+            <div class="brand-subtitle">Addis Ababa, Ethiopia · Discovery & CRM</div>
+          </div>
+        </a>
+
+        <!-- Live Cloudflare D1 Connection Badge -->
+        <div id="connectionStatusPill" class="connection-pill" title="Checking database connection...">
+          <span id="connectionStatusDot" class="status-dot"></span>
+          <span id="connectionStatusText">Connecting D1...</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <!-- Direct Hotline Links for Addis Ababa -->
+        <div class="header-contact-pill" title="B2 Technologies Direct Lines (Addis Ababa)">
+          <span>📍 Addis Ababa</span>
+          <a href="tel:+251919477040" class="contact-link" title="Call Bahreab: 0919477040">📞 0919477040</a>
+          <span class="sep">·</span>
+          <a href="tel:+251966726065" class="contact-link" title="Call Betty: 0966726065">📞 0966726065</a>
+        </div>
+
+        <!-- Active User Profile Pill -->
+        <div id="userProfileBadge" class="user-profile-badge" style="display: none;">
+          <span class="user-avatar-circle">👤</span>
+          <span id="loggedInUserName">Bahreab</span>
+          <button type="button" id="logoutBtn" class="logout-btn" title="Sign out">🚪</button>
+        </div>
+
+        <button type="button" id="themeToggleBtn" class="outline" style="padding: 7px 12px; font-size: 13px;">🌙 Dark</button>
+        <button type="button" id="newLeadBtn" class="primary" style="padding: 8px 14px; font-size: 13px;">+ New Intake</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <div class="tabs-inner">
+      <button type="button" class="tab-btn active" data-view="intake">
+        📝 Lead Intake Form
+      </button>
+      <button type="button" class="tab-btn" data-view="crm">
+        📋 Pipeline CRM
+        <span id="leadsCountBadge" class="tab-count">0</span>
+      </button>
+      <button type="button" class="tab-btn" data-view="analytics">
+        📊 Analytics & KPIs
+      </button>
+      <button type="button" class="tab-btn" data-view="sync">
+        🔄 Data & Cloud Sync
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Area -->
+  <main class="container">
+
+    <!-- VIEW 1: INTAKE FORM -->
+    <section id="view-intake" class="view-panel active">
+      <div style="margin-bottom: 20px;">
+        <h2 id="formCardTitle" style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">New client discovery form</h2>
+        <p class="hint-text">
+          Capture business information, requirements, decision-makers, and project budgets for restaurants, hotels, schools, e-commerce, and services. Automatically saved to Cloudflare D1.
+        </p>
+      </div>
+
+      <div class="form-layout">
+        <!-- Form Fields Column -->
+        <div class="form-column">
+          <form id="leadForm">
+
+            <!-- 01: Business Profile -->
+            <div class="card">
+              <span class="section-tag">01 · Business Profile</span>
+              <h3 class="card-title">Business Information</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="business">Business / Organization Name <span class="req-star">*</span></label>
+                  <input required id="business" name="business" placeholder="e.g. Etege Luxury Hotel & Spa">
+                </div>
+
+                <div class="field">
+                  <label for="industry">Industry Category <span class="req-star">*</span></label>
+                  <select required id="industry" name="industry">
+                    <option value="">Select a category</option>
+                    <option>Hotel / Accommodation</option>
+                    <option>School / Education</option>
+                    <option>Restaurant / Cafe</option>
+                    <option>Catering / Events</option>
+                    <option>Construction / Consultancy</option>
+                    <option>Clinic / Healthcare</option>
+                    <option>Retail / E-commerce</option>
+                    <option>NGO / Organization</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="location">City / Area</label>
+                  <input id="location" name="location" placeholder="e.g. Addis Ababa, Bole Atlas">
+                </div>
+
+                <div class="field">
+                  <label for="maps">Google Maps URL</label>
+                  <input type="url" id="maps" name="maps" placeholder="https://maps.app.goo.gl/...">
+                </div>
+
+                <div class="field full-width">
+                  <label for="description">What does the business do?</label>
+                  <textarea id="description" name="description" placeholder="Brief overview of products, services, target audience, branches, and unique selling points..."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- 02: Decision Maker Contact -->
+            <div class="card">
+              <span class="section-tag">02 · Stakeholder Details</span>
+              <h3 class="card-title">Decision-Maker Details</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="contact">Contact Person Name <span class="req-star">*</span></label>
+                  <input required id="contact" name="contact" placeholder="Full name">
+                </div>
+
+                <div class="field">
+                  <label for="role">Position / Role</label>
+                  <input id="role" name="role" placeholder="Owner, General Manager, Director...">
+                </div>
+
+                <div class="field">
+                  <label for="phone">Phone / WhatsApp <span class="req-star">*</span></label>
+                  <input required id="phone" name="phone" type="tel" placeholder="+251 91 123 4567">
+                </div>
+
+                <div class="field">
+                  <label for="email">Email Address</label>
+                  <input id="email" name="email" type="email" placeholder="client@company.com">
+                </div>
+              </div>
+            </div>
+
+            <!-- 03: Website Project Specs -->
+            <div class="card">
+              <span class="section-tag">03 · Project Scope</span>
+              <h3 class="card-title">Website Requirements</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="siteType">Website Objective</label>
+                  <select name="siteType" id="siteType">
+                    <option>New business website</option>
+                    <option>Redesign an existing website</option>
+                    <option>Booking / reservation website</option>
+                    <option>E-commerce website</option>
+                    <option>School / student portal</option>
+                    <option>Custom CRM / web application</option>
+                    <option>Not decided yet</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="currentSite">Current Website URL</label>
+                  <input type="url" id="currentSite" name="currentSite" placeholder="https://www.example.com">
+                </div>
+
+                <div class="field full-width">
+                  <label for="features">Key Pages & Special Features</label>
+                  <textarea id="features" name="features" placeholder="Home, About, Services, Gallery, Online Booking, Telebirr / Chapa payment integration, Multi-language, Admin dashboard..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="branding">Brand Assets Available?</label>
+                  <select id="branding" name="branding">
+                    <option>Unknown</option>
+                    <option>Yes — full logo and high-res photos</option>
+                    <option>Logo only</option>
+                    <option>No — full branding needed</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="hosting">Domain & Hosting Status</label>
+                  <select id="hosting" name="hosting">
+                    <option>Unknown</option>
+                    <option>Both available</option>
+                    <option>Domain only</option>
+                    <option>Hosting only</option>
+                    <option>Neither available</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="language">Languages</label>
+                  <input id="language" name="language" placeholder="English, Amharic, Oromo...">
+                </div>
+
+                <div class="field">
+                  <label for="budget">Expected Budget (ETB)</label>
+                  <input id="budget" name="budget" placeholder="e.g. 50,000 ETB">
+                  <!-- Budget preset quick chips -->
+                  <div class="chip-group">
+                    <button type="button" class="chip-btn" data-val="30,000 ETB">30k</button>
+                    <button type="button" class="chip-btn" data-val="50,000 ETB">50k</button>
+                    <button type="button" class="chip-btn" data-val="80,000 ETB">80k</button>
+                    <button type="button" class="chip-btn" data-val="120,000 ETB">120k</button>
+                    <button type="button" class="chip-btn" data-val="250,000+ ETB">250k+</button>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="timeline">Expected Deadline</label>
+                  <input id="timeline" name="timeline" placeholder="e.g. 3 weeks, next month...">
+                </div>
+
+                <div class="field">
+                  <label for="status">Initial Lead Status</label>
+                  <select id="status" name="status">
+                    <option>New lead</option>
+                    <option>Interested</option>
+                    <option>Proposal requested</option>
+                    <option>Meeting scheduled</option>
+                    <option>Negotiating</option>
+                    <option>Won</option>
+                    <option>Not interested</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- 04: Meeting Notes & Actions -->
+            <div class="card">
+              <span class="section-tag">04 · Coordination</span>
+              <h3 class="card-title">Meeting Notes & Assigned Agent</h3>
+              <div class="form-grid">
+                <div class="field full-width">
+                  <label for="notes">Meeting Notes, Discussion & Next Follow-Up Date</label>
+                  <textarea id="notes" name="notes" placeholder="Client questions, specific requirements, follow-up schedule..."></textarea>
+                </div>
+
+                <div class="field">
+                  <label for="agent">Collected by (Agent Name)</label>
+                  <input name="agent" id="agent" placeholder="e.g. B2 Tech Sales Lead">
+                </div>
+              </div>
+
+              <!-- Form Actions Bar -->
+              <div class="actions-row" style="margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--border);">
+                <button type="submit" class="primary">
+                  💾 Save to Cloudflare D1
+                </button>
+                <button type="button" id="shareBriefBtn" class="secondary">
+                  📲 Share via WhatsApp
+                </button>
+                <button type="button" id="copyBriefBtn" class="outline">
+                  📋 Copy Brief
+                </button>
+                <button type="button" id="previewBriefBtn" class="outline">
+                  👁️ Preview Brief
+                </button>
+                <button type="button" id="resetBtn" class="outline">
+                  🧹 Clear Form
+                </button>
+              </div>
+              <p class="hint-text" style="margin-top: 12px;">
+                Directly commits to the Cloudflare D1 SQL database when connected. If offline, safely persists in local storage with auto-sync capability.
+              </p>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Sidebar Column -->
+        <aside class="sidebar-column">
+          <!-- B2 Technologies Agency Profile Card -->
+          <div class="agency-info-card">
+            <div class="agency-card-header">
+              <img src="images/b2-logo-circle.png" alt="B2 Technologies" class="agency-logo-circle">
+              <div class="agency-title-group">
+                <h3>B2 Technologies</h3>
+                <p>Ideas / Websites / Solutions</p>
+              </div>
+            </div>
+
+            <div style="font-size: 12px; color: #e9d5ff; margin-bottom: 10px;">
+              📍 <strong>Addis Ababa, Ethiopia</strong>
+            </div>
+
+            <div class="agency-contact-items">
+              <div class="agency-contact-item">
+                <span class="agent-label">👤 Bahreab Feleke</span>
+                <a href="tel:+251919477040" class="phone-btn" title="Call Bahreab">📞 0919477040</a>
+              </div>
+              <div class="agency-contact-item">
+                <span class="agent-label">👤 Betty</span>
+                <a href="tel:+251966726065" class="phone-btn" title="Call Betty">📞 0966726065</a>
+              </div>
+            </div>
+
+            <div style="font-size: 11px; color: #c4b5fd; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 14px;">
+              Core Services:
+            </div>
+            <div class="agency-services-list">
+              <span class="service-chip">🌐 Website Dev</span>
+              <span class="service-chip">☁️ Cloud & Hosting</span>
+              <span class="service-chip">📈 Digital Marketing</span>
+              <span class="service-chip">🛡️ IT Support</span>
+              <span class="service-chip">&lt;/&gt; Custom Solutions</span>
+            </div>
+          </div>
+
+          <!-- Recent Leads Card -->
+          <div class="card">
+            <span class="section-tag">Recent Intake</span>
+            <h3 class="card-title">Recently Saved</h3>
+            <div id="recentLeadsList">
+              <p class="hint-text">Loading recent leads...</p>
+            </div>
+            <div style="margin-top: 14px;">
+              <button type="button" class="btn-outline" style="width: 100%;" onclick="switchView('crm')">
+                View Full CRM Pipeline →
+              </button>
+            </div>
+          </div>
+
+          <!-- Developer Brief Card -->
+          <div class="card">
+            <span class="section-tag">Workflow</span>
+            <h3 class="card-title">Brief Delivery</h3>
+            <p class="hint-text" style="margin-bottom: 12px;">
+              Generate a clean client brief and send it directly to Bahreab or Betty on WhatsApp, or export as CSV spreadsheet.
+            </p>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <button type="button" class="btn-secondary" style="width: 100%;" onclick="shareBriefWithContact('bahreab')">
+                📲 Send to Bahreab (0919477040)
+              </button>
+              <button type="button" class="btn-secondary" style="width: 100%;" onclick="shareBriefWithContact('betty')">
+                📲 Send to Betty (0966726065)
+              </button>
+              <button type="button" class="btn-outline" style="width: 100%;" onclick="exportCSV()">
+                Download CSV Spreadsheet
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- VIEW 2: PIPELINE CRM -->
+    <section id="view-crm" class="view-panel">
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Client Pipeline & CRM</h2>
+        <p class="hint-text">Track discovery leads across deal stages, update requirements, and manage conversion.</p>
+      </div>
+
+      <!-- Controls & Filters -->
+      <div class="card" style="padding: 16px 20px; margin-bottom: 20px;">
+        <div class="kanban-controls" style="margin-bottom: 0;">
+          <div class="search-filters">
+            <div class="search-box">
+              <input type="text" id="crmSearch" placeholder="🔍 Search business, contact, phone, location...">
+            </div>
+
+            <select id="crmIndustryFilter" style="max-width: 200px;">
+              <option value="">All Categories</option>
+              <option>Hotel / Accommodation</option>
+              <option>School / Education</option>
+              <option>Restaurant / Cafe</option>
+              <option>Catering / Events</option>
+              <option>Construction / Consultancy</option>
+              <option>Clinic / Healthcare</option>
+              <option>Retail / E-commerce</option>
+              <option>NGO / Organization</option>
+              <option>Other</option>
+            </select>
+
+            <select id="crmStatusFilter" style="max-width: 180px;">
+              <option value="">All Stages</option>
+              <option value="New lead">New Lead</option>
+              <option value="Interested">Interested</option>
+              <option value="Proposal requested">Proposal Sent</option>
+              <option value="Meeting scheduled">Meeting Scheduled</option>
+              <option value="Negotiating">Negotiating</option>
+              <option value="Won">Won</option>
+              <option value="Not interested">Not Interested</option>
+            </select>
+          </div>
+
+          <div class="actions-row">
+            <button type="button" id="viewKanbanBtn" class="primary" style="padding: 8px 14px;">Kanban Board</button>
+            <button type="button" id="viewTableBtn" class="outline" style="padding: 8px 14px;">Table View</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kanban Board Container -->
+      <div id="kanbanContainer">
+        <div class="kanban-grid" id="kanbanGrid">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Table View Container -->
+      <div id="tableContainer" style="display: none;">
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Business Name</th>
+                <th>Status</th>
+                <th>Category</th>
+                <th>Decision Maker</th>
+                <th>Phone</th>
+                <th>Budget (ETB)</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTableBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: ANALYTICS & KPIS -->
+    <section id="view-analytics" class="view-panel">
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Discovery & Conversion Analytics</h2>
+        <p class="hint-text">Real-time pipeline metrics, conversion rates, and revenue estimates in Ethiopian Birr (ETB).</p>
+      </div>
+
+      <!-- 4 Top KPI Cards -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon indigo">📋</div>
+          <div class="stat-info">
+            <h4>Total Captured Leads</h4>
+            <div id="kpiTotalLeads" class="stat-value">0</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon amber">💼</div>
+          <div class="stat-info">
+            <h4>Active Pipeline (ETB)</h4>
+            <div id="kpiPipelineVal" class="stat-value">0 ETB</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon emerald">🏆</div>
+          <div class="stat-info">
+            <h4>Won Deals Value (ETB)</h4>
+            <div id="kpiWonVal" class="stat-value">0 ETB</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon sky">🎯</div>
+          <div class="stat-info">
+            <h4>Win Rate</h4>
+            <div id="kpiWinRate" class="stat-value">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Distribution Charts -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+        <div class="card">
+          <span class="section-tag">Funnel Health</span>
+          <h3 class="card-title">Leads by Stage</h3>
+          <div id="stageBreakdownContainer">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="section-tag">Market Demand</span>
+          <h3 class="card-title">Leads by Industry</h3>
+          <div id="industryBreakdownContainer">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: DATA & CLOUD SYNC -->
+    <section id="view-sync" class="view-panel">
+      <div style="margin-bottom: 20px;">
+        <h2 style="font-size: 24px; font-weight: 800; letter-spacing: -0.5px;">Data Operations & Cloudflare D1 Sync</h2>
+        <p class="hint-text">Manage database synchronization, backup exports, and offline migration.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px;">
+        <!-- Cloudflare D1 Migration Card -->
+        <div class="card">
+          <span class="section-tag">Cloud Database</span>
+          <h3 class="card-title">Cloudflare D1 Synchronization</h3>
+          <p class="hint-text" style="margin-bottom: 16px;">
+            If you or your coworkers captured leads while offline or in local browser storage, click below to upload and sync them with your Cloudflare D1 database.
+          </p>
+          <button type="button" id="syncLocalToCloudBtn" class="primary" style="width: 100%; margin-bottom: 10px;">
+            ☁️ Upload & Sync Local Leads to Cloudflare D1
+          </button>
+          <button type="button" class="outline" style="width: 100%;" onclick="checkCloudConnection(); refreshData(); showToast('Checking D1 database connection...', 'info');">
+            🔄 Test Database Ping
+          </button>
+        </div>
+
+        <!-- Export Center -->
+        <div class="card">
+          <span class="section-tag">Data Export</span>
+          <h3 class="card-title">Spreadsheet & Backup Files</h3>
+          <p class="hint-text" style="margin-bottom: 16px;">
+            Export all client discovery briefs and contact records for reporting, Excel analysis, or CRM migrations.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <button type="button" id="exportCsvBtn" class="secondary" style="width: 100%;">
+              📊 Export to CSV (Excel Compatible)
+            </button>
+            <button type="button" id="exportJsonBtn" class="outline" style="width: 100%;">
+              💾 Export Full JSON Backup
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Branded Enterprise Footer -->
+  <footer class="app-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="images/b2-logo-circle.png" alt="B2 Technologies" class="footer-logo-img">
+        <div>
+          <strong>B2 Technologies</strong>
+          <p>Ideas · Websites · Solutions — Building a Smarter Tomorrow</p>
+        </div>
+      </div>
+      <div class="footer-info">
+        <span>📍 Addis Ababa, Ethiopia</span>
+        <span>📞 <a href="tel:+251919477040">0919477040</a> / <a href="tel:+251966726065">0966726065</a></span>
+        <span>⚡ Cloudflare Edge & D1 SQL</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Client Discovery Brief Modal Dialog -->
+  <div id="briefModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="briefModalTitle">Client Discovery Brief</h3>
+        <button type="button" id="closeModalBtn" class="close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <pre id="briefContent" class="brief-box"></pre>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modalWhatsAppBahreabBtn" class="secondary" title="Send directly to Bahreab (+251919477040)">📲 Bahreab (0919477040)</button>
+        <button type="button" id="modalWhatsAppBettyBtn" class="secondary" title="Send directly to Betty (+251966726065)">📲 Betty (0966726065)</button>
+        <button type="button" id="modalCopyBtn" class="outline">📋 Copy Brief</button>
+        <button type="button" id="modalPrintBtn" class="outline">🖨️ Print / PDF</button>
+        <button type="button" id="modalEditBtn" class="primary">✏️ Edit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- Application Script -->
+  <script src="js/app.js"></script>
+</body>
+</html>

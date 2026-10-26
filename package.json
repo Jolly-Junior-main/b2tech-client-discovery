@@ -1,0 +1,18 @@
+{
+  "name": "b2tech-client-discovery",
+  "version": "1.0.0",
+  "description": "B2 Tech - Client Discovery and Lead Intake Platform powered by Cloudflare Workers and D1",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init:local": "wrangler d1 execute DB --local --file=./schema.sql",
+    "db:init:remote": "wrangler d1 execute b2technology --remote --file=./schema.sql"
+  },
+  "keywords": ["cloudflare", "workers", "d1", "lead-intake", "crm", "b2tech"],
+  "author": "B2 Tech",
+  "license": "ISC",
+  "devDependencies": {
+    "wrangler": "^4.86.0"
+  }
+}

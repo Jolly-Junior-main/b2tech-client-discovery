@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "b2tech-client-discovery",
+  "main": "src/index.js",
+  "compatibility_date": "2024-09-23",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "b2technology",
+      "database_id": "dea65ff2-4663-45b1-9afe-b22e11b2e6bc"
+    }
+  ]
+}
